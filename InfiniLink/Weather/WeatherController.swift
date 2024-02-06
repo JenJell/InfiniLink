@@ -410,43 +410,45 @@ class WeatherController: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func updateWeatherData(ignoreTimeLimits: Bool) {
-        if !weatherData {return}
-        
-        var canUpdateNWS = true
-        var canUpdateWAPI = true
-        
-        if !ignoreTimeLimits {
-            let currentTimeNWS = Int(NSDate().timeIntervalSince1970 / 60 / 15) // Updates roughly every 15 minutes
-            let currentTimeWAPI = Int(NSDate().timeIntervalSince1970 / 60 / 60)// Updates roughly every hour
-            if bleManagerVal.lastWeatherUpdateNWS == currentTimeNWS {canUpdateNWS = false}
-            if bleManagerVal.lastWeatherUpdateWAPI == currentTimeWAPI {canUpdateWAPI = false}
-            bleManagerVal.lastWeatherUpdateNWS = currentTimeNWS
-            bleManagerVal.lastWeatherUpdateWAPI = currentTimeWAPI
-        }
-        
-        
-        if !useCurrentLocation {
-            callWeatherAPI(canUpdateNWS: canUpdateNWS, canUpdateWAPI: canUpdateWAPI)
-            return
-        }
-        
-        switch locationManager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
-            callWeatherAPI(canUpdateNWS: canUpdateNWS, canUpdateWAPI: canUpdateWAPI)
-            break
+        DispatchQueue.main.async { [self] in
+            if !weatherData {return}
             
-        case .restricted, .denied:
-            disableLocationFeatures()
-            break
+            var canUpdateNWS = true
+            var canUpdateWAPI = true
             
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-            bleManagerVal.lastWeatherUpdateNWS = 0
-            bleManagerVal.lastWeatherUpdateWAPI = 0
-            break
+            if !ignoreTimeLimits {
+                let currentTimeNWS = Int(NSDate().timeIntervalSince1970 / 60 / 15) // Updates roughly every 15 minutes
+                let currentTimeWAPI = Int(NSDate().timeIntervalSince1970 / 60 / 60)// Updates roughly every hour
+                if bleManagerVal.lastWeatherUpdateNWS == currentTimeNWS {canUpdateNWS = false}
+                if bleManagerVal.lastWeatherUpdateWAPI == currentTimeWAPI {canUpdateWAPI = false}
+                bleManagerVal.lastWeatherUpdateNWS = currentTimeNWS
+                bleManagerVal.lastWeatherUpdateWAPI = currentTimeWAPI
+            }
             
-        default:
-            break
+            
+            if !useCurrentLocation {
+                callWeatherAPI(canUpdateNWS: canUpdateNWS, canUpdateWAPI: canUpdateWAPI)
+                return
+            }
+            
+            switch locationManager.authorizationStatus {
+            case .authorizedWhenInUse, .authorizedAlways:
+                callWeatherAPI(canUpdateNWS: canUpdateNWS, canUpdateWAPI: canUpdateWAPI)
+                break
+                
+            case .restricted, .denied:
+                disableLocationFeatures()
+                break
+                
+            case .notDetermined:
+                locationManager.requestWhenInUseAuthorization()
+                bleManagerVal.lastWeatherUpdateNWS = 0
+                bleManagerVal.lastWeatherUpdateWAPI = 0
+                break
+                
+            default:
+                break
+            }
         }
     }
     

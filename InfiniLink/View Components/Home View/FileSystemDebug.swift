@@ -197,6 +197,7 @@ struct FileSystemDebug: View {
     func handleCommand(command: String) {
         fsBusy = true
         let commands = command.components(separatedBy: " ")
+        BLEFSHandler.shared.progress = 0
         
         switch commands[0] {
         case "read":

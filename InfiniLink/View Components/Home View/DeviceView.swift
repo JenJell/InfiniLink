@@ -81,7 +81,7 @@ struct DeviceView: View {
                                 Text(deviceInfo.deviceName == "" ? "InfiniTime" : deviceInfo.deviceName)
                                     .foregroundColor(colorScheme == .dark ? .white : .black)
                                     .bold()
-                                    .font(.title.weight(.bold))
+                                    .font(.title2.weight(.medium))
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .center)

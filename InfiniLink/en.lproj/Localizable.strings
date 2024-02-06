@@ -263,6 +263,7 @@
 "connected_to" = "Connected to";
 
 "file_system" = "File System";
+"external_resources" = "Download External Resources";
 
 "enable_weather_data" = "Enable Weather Data";
 "use_current_location" = "Use Current Location";

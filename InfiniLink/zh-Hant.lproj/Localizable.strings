@@ -266,6 +266,7 @@
 "connected_to" = "已連線至";
 
 "file_system" = "File System";
+"external_resources" = "Install External Resources";
 
 // NSLocalizedString("", comment: "")
 "enable_weather_data" = "Enable Weather Data";

@@ -79,6 +79,7 @@
 		E515FB17284C56480040B582 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515FB16284C56480040B582 /* WelcomeView.swift */; };
 		E515FB1B284C58AA0040B582 /* BLEManagerVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515FB1A284C58AA0040B582 /* BLEManagerVariables.swift */; };
 		E5286050282C5ED300C06FA0 /* ChartViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E528604F282C5ED300C06FA0 /* ChartViewComponents.swift */; };
+		E53F51352B718E4A008D4CE6 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = E53F51342B718E4A008D4CE6 /* Zip */; };
 		E57654032B5781970059C8EF /* WeatherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57654022B5781970059C8EF /* WeatherController.swift */; };
 		E57AD5772823F85D00E33EEA /* DeviceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AD5762823F85D00E33EEA /* DeviceData.swift */; };
 		E57E326F2B6682CE00173AF1 /* FileSystemDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E326E2B6682CE00173AF1 /* FileSystemDebug.swift */; };
@@ -209,6 +210,7 @@
 			files = (
 				E59398FA2B58DA1F00D5840A /* SwiftyJSON in Frameworks */,
 				263B20C526CEB46800676BF0 /* SwiftUICharts in Frameworks */,
+				E53F51352B718E4A008D4CE6 /* Zip in Frameworks */,
 				26A6315E26C498B7005AE404 /* NordicDFU in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,6 +537,7 @@
 				26A6315D26C498B7005AE404 /* NordicDFU */,
 				263B20C426CEB46800676BF0 /* SwiftUICharts */,
 				E59398F92B58DA1F00D5840A /* SwiftyJSON */,
+				E53F51342B718E4A008D4CE6 /* Zip */,
 			);
 			productName = "Infini-iOS";
 			productReference = 264BFE3E26BC51CE0050A223 /* InfiniLink.app */;
@@ -616,6 +619,7 @@
 				26A6315C26C498B7005AE404 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */,
 				263B20C326CEB46800676BF0 /* XCRemoteSwiftPackageReference "SwiftUICharts" */,
 				E59398F82B58DA1F00D5840A /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				E53F51332B718E4A008D4CE6 /* XCRemoteSwiftPackageReference "Zip" */,
 			);
 			productRefGroup = 264BFE3F26BC51CE0050A223 /* Products */;
 			projectDirPath = "";
@@ -1106,6 +1110,14 @@
 				kind = branch;
 			};
 		};
+		E53F51332B718E4A008D4CE6 /* XCRemoteSwiftPackageReference "Zip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Zip.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
+			};
+		};
 		E59398F82B58DA1F00D5840A /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
@@ -1126,6 +1138,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 26A6315C26C498B7005AE404 /* XCRemoteSwiftPackageReference "IOS-DFU-Library" */;
 			productName = NordicDFU;
+		};
+		E53F51342B718E4A008D4CE6 /* Zip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E53F51332B718E4A008D4CE6 /* XCRemoteSwiftPackageReference "Zip" */;
+			productName = Zip;
 		};
 		E59398F92B58DA1F00D5840A /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;

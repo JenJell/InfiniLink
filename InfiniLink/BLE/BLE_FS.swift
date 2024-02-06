@@ -7,16 +7,18 @@
 //
 
 import CoreBluetooth
+import SwiftyJSON
+import Zip
 
 /** TODO:
     O read file
-    - write file
+    O write file
     O delete file
     O make directory
     O list directory
     O move file or directory
 */
-class BLEFSHandler {
+class BLEFSHandler : ObservableObject{
     static var shared = BLEFSHandler()
     let bleManager = BLEManager.shared
     let bleManagerVal = BLEManagerVal.shared
@@ -27,7 +29,7 @@ class BLEFSHandler {
     
     struct WriteFileFS {
         var group = DispatchGroup()
-        var offset : UInt32 = 0
+        var offset : Int = 0
         var freeSpace : UInt32  = 0
         var data = Data()
         var completed : Bool = false
@@ -100,6 +102,64 @@ class BLEFSHandler {
         // Extended status
         case dirNotEmptyError = 0x0A
     }
+    
+    @Published var progress : Int = 0
+    @Published var externalResourcesSize : Int = 0
+    
+    func downloadTransfer() {
+        DispatchQueue.global(qos: .default).async { [self] in
+            do {
+                let unzipDirectory = try Zip.quickUnzipFile(DFU_Updater.shared.firmwareURL)
+                let jsonFilePath = unzipDirectory.appendingPathComponent("resources.json")
+                let jsonData = try Data(contentsOf: jsonFilePath)
+                let json = try JSON(data: jsonData)
+                
+                var newExternalResourcesSize = 0
+                
+                for idx in 0...json["resources"].count-1 {
+                    let fileDataPath = unzipDirectory.appendingPathComponent(json["resources"][idx]["filename"].stringValue)
+                    let fileData = try Data(contentsOf: fileDataPath)
+                    
+                    newExternalResourcesSize += fileData.count
+                }
+                
+                DispatchQueue.main.async {
+                    self.externalResourcesSize = newExternalResourcesSize
+                }
+                
+                for idx in 0...json["resources"].count-1 {
+                    createDir(path: json["resources"][idx]["path"].stringValue)
+                    let fileDataPath = unzipDirectory.appendingPathComponent(json["resources"][idx]["filename"].stringValue)
+                    let fileData = try Data(contentsOf: fileDataPath)
+                    let _ = writeFile(data: fileData, path: json["resources"][idx]["path"].stringValue, offset: 0)
+                }
+                
+                DispatchQueue.main.async {
+                    DFU_Updater.shared.transferCompleted = true
+                }
+            }
+            catch {
+                print("Something went wrong")
+            }
+        }
+    }
+    
+    private func createDir(path: String) {
+        let dir = path.components(separatedBy: "/").filter { $0 != "" }
+        
+        if dir.count > 1 {
+            var dirList : [String] = []
+            var newDir = ""
+            for idx in 0...dir.count-2 {
+                newDir = newDir + "/" + dir[idx]
+                dirList.append(newDir)
+            }
+            
+            for makePath in dirList {
+                let _ = makeDir(path: makePath)
+            }
+        }
+    }
 
     func readFile(path: String, offset: UInt32) -> ReadFileFS {
         var read = ReadFileFS()
@@ -140,6 +200,8 @@ class BLEFSHandler {
             readFileFS.group.wait()
         }
         
+        //print(readFileFS.data.hexString)
+        
         return readFileFS
     }
 
@@ -168,6 +230,7 @@ class BLEFSHandler {
         writeFileFS.group.wait()
         
         var dataQueue = data
+        var newOffset = 0
         
         while !writeFileFS.completed {
             writeFileFS.group.enter()
@@ -180,7 +243,7 @@ class BLEFSHandler {
             writeData.append(Commands.padding.rawValue)
             
             var dataToSend : Data = Data()
-            for _ in 0...490-1 {
+            for _ in 0...128-1 {
                 if dataQueue.count > 0 {
                     dataToSend.append(dataQueue.removeFirst())
                 } else {
@@ -188,19 +251,29 @@ class BLEFSHandler {
                 }
             }
             
-            print("dataToSend: \(dataToSend.hexString)")
+            //print("dataToSend: \(dataToSend.hexString)")
+            //print("chunkOffset: \(newOffset)")
             
-            writeData.append(contentsOf: convertUInt32ToUInt8Array(value: readFileFS.chunkOffset))
+            writeData.append(contentsOf: convertUInt32ToUInt8Array(value: UInt32(newOffset)))
             writeData.append(contentsOf: convertUInt32ToUInt8Array(value: UInt32(dataToSend.count)))
             writeData.append(contentsOf: dataToSend)
             
             bleManager.infiniTime.writeValue(writeData, for: BLEManager.shared.blefsTransfer!, type: .withResponse)
             writeFileFS.group.wait()
             
-            writeFileFS.offset = writeFileFS.offset + UInt32(dataToSend.count)
-            print("Count: \(data.count), Offset: \(writeFileFS.offset)")
+            newOffset += dataToSend.count
+            let newProgress = progress + dataToSend.count
+            DispatchQueue.main.async {
+                self.progress = newProgress
+            }
+            //writeFileFS.offset = writeFileFS.offset + dataToSend.count
+            //print("Count: \(data.count), Offset: \(writeFileFS.offset)")
             
-            if UInt32(data.count) == writeFileFS.offset {
+            //print("progress: \((round(Double(progress)/Double(externalResourcesSize))*100))%")
+            
+            print("Progress: \(progress), Size: \(externalResourcesSize)")
+            
+            if UInt32(data.count) == newOffset {
                 writeFileFS.completed = true
             }
         }
@@ -374,7 +447,7 @@ class BLEFSHandler {
                 let offset: UInt32 = UInt32(responseData[7]) << 24 | UInt32(responseData[6]) << 16 | UInt32(responseData[5]) << 8 | UInt32(responseData[4])
                 let freeSpace: UInt32 = UInt32(responseData[18]) << 24 | UInt32(responseData[17]) << 16 | UInt32(responseData[16]) << 8 | UInt32(responseData[15])
                 
-                writeFileFS.offset = offset
+                //writeFileFS.offset = offset
                 writeFileFS.freeSpace = freeSpace
 
                 writeFileFS.valid = true
@@ -408,8 +481,8 @@ class BLEFSHandler {
             switch responseData[1] {
             case Responses.ok.rawValue:
                 informationTrandfer[0].valid = true
-            default:
-                print("error response code \(responseData[1])")
+            default: break
+                //print("error response code \(responseData[1])")
             }
             informationTrandfer[0].group.leave()
         } else if responseData[0] == Commands.lsResponse.rawValue {
