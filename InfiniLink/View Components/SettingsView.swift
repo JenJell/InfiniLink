@@ -16,6 +16,8 @@ struct Settings_Page: View {
     @ObservedObject var deviceInfo = BLEDeviceInfo.shared
     @ObservedObject var weatherController = WeatherController.shared
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @ObservedObject private var deviceDataForSettings: DeviceData = deviceData
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.openURL) private var openURL
@@ -42,10 +44,22 @@ struct Settings_Page: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 12) {
+            HStack(spacing: 15) {
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .imageScale(.medium)
+                        .padding(14)
+                        .font(.body.weight(.semibold))
+                        .foregroundColor(colorScheme == .dark ? .white : .darkGray)
+                        .background(Color.gray.opacity(0.15))
+                        .clipShape(Circle())
+                }
                 Text(NSLocalizedString("settings", comment: ""))
                     .foregroundColor(.primary)
                     .font(.title2.weight(.semibold))
+                Spacer()
 //                Spacer()
 //                HStack {
 //                    if bleManager.isConnectedToPinetime && deviceInfo.firmware != "" {

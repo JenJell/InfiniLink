@@ -247,6 +247,18 @@ struct DeviceView: View {
                 })
                 Spacer()
                     .frame(height: 6)
+                NavigationLink(destination: Settings_Page()) {
+                    HStack {
+                        Text(NSLocalizedString("settings", comment: ""))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(.gray)
+                    }
+                    .modifier(RowModifier(style: .capsule))
+                }
+                Spacer()
+                    .frame(height: 6)
                 NavigationLink(destination: FileSystemDebug()) {
                     HStack {
                         Text(NSLocalizedString("file_system", comment: ""))
