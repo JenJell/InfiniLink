@@ -56,7 +56,8 @@ struct BatteryContentView: View {
                                 VStack {
                                     setGraphType(data: data)
                                         .xAxisGrid(chartData: data)
-                                        .yAxisGrid(chartData: data)                      .yAxisGrid(chartData: data)
+                                        .yAxisGrid(chartData: data)
+                                        .animation(nil)
                                         .id(data.id)
                                     Spacer(minLength: 10)
                                 }
