@@ -67,20 +67,20 @@ class SheetManager: ObservableObject {
 	
 	struct CurrentSheet: View {
 		var body: some View {
-			switch SheetManager.shared.sheetSelection {
-			case .onboarding:
-				Onboarding()
-			case .connect:
-				Connect()
-			case .notification:
-				ArbitraryNotificationSheet()
-			case .whatsNew:
-				WhatsNew()
-			case .chartSettings:
-				ChartSettingsSheet()
-			case .stepSettings:
-				StepSettingsSheet()
-			}
+            switch SheetManager.shared.sheetSelection {
+            case .onboarding:
+                Onboarding()
+            case .connect:
+                Connect()
+            case .notification:
+                ArbitraryNotificationSheet()
+            case .whatsNew:
+                WhatsNew()
+            case .chartSettings:
+                ChartSettingsSheet()
+            case .stepSettings:
+                StepSettingsSheet()
+            }
 		}
 	}
 }

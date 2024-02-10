@@ -39,7 +39,7 @@ struct FileSystemDebug: View {
                 }
                 Text(NSLocalizedString("file_system", comment: ""))
                     .foregroundColor(.primary)
-                    .font(.title.weight(.bold))
+                    .font(.title2.weight(.semibold))
                 Spacer()
             }
             .padding()

@@ -27,6 +27,8 @@ struct DeviceView: View {
     
     private var dateFormatter = DateComponentsFormatter()
     
+    @State private var fontSize = false
+    
     var icon: String {
         switch bleManagerVal.weatherInformation.icon {
         case 0:
@@ -363,13 +365,32 @@ struct CustomScrollView<Content: View>: View {
                     }
                     VStack(spacing: 0) {
                         HStack(spacing: 12) {
-                            if !bleManager.isConnectedToPinetime {
-                                Text(NSLocalizedString("not_connected", comment: ""))
-                                    .foregroundColor(.gray)
-                            } else {
-                                Text(deviceInfo.deviceName == "" ? "InfiniTime" : deviceInfo.deviceName)
-                                    .font(.title.weight(.bold))
-                                    .foregroundColor(colorScheme == .dark ? .white : .black)
+                            ZStack {
+                                Text("Blank")
+                                    .opacity(0.0)
+                                    .font(.system(size: 30))
+                                if !bleManager.isConnectedToPinetime {
+                                    Text(NSLocalizedString("not_connected", comment: ""))
+                                        .font(.title2.weight(.semibold))
+                                        .foregroundColor(.gray)
+                                } else {
+                                    if scrollPosition - geometry.safeAreaInsets.top <= 64 {
+                                        Text(deviceInfo.deviceName == "" ? "InfiniTime" : deviceInfo.deviceName)
+                                            .bold()
+                                        //.font(.title2.weight(.semibold))
+                                            .modifier(AnimatingFontSize(fontSize: showDivider ? 24 : 30))
+                                            .animation(Animation.easeInOut(duration: 0.1), value: showDivider)
+                                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                                    } else {
+                                        Text(deviceInfo.deviceName == "" ? "InfiniTime" : deviceInfo.deviceName)
+                                            .bold()
+                                        //.font(.title.weight(.semibold))
+                                        
+                                            .modifier(AnimatingFontSize(fontSize: showDivider ? 24 : 30))
+                                            .animation(Animation.easeInOut(duration: 0.1), value: showDivider)
+                                            .foregroundColor(colorScheme == .dark ? .white : .black)
+                                    }
+                                }
                             }
                         }
                         .padding(18)
@@ -389,11 +410,11 @@ struct CustomScrollView<Content: View>: View {
                                         self.scrollPosition = preferences
                                         
                                         if scrollPosition - geometry.safeAreaInsets.top <= 64 {
-                                            withAnimation(.easeInOut(duration: 0.15)) {
+                                            withAnimation(.easeInOut(duration: 0.1)) {
                                                 self.showDivider = true
                                             }
                                         } else {
-                                            withAnimation(.easeInOut(duration: 0.15)) {
+                                            withAnimation(.easeInOut(duration: 0.1)) {
                                                 self.showDivider = false
                                             }
                                         }
@@ -407,6 +428,20 @@ struct CustomScrollView<Content: View>: View {
                     }
                 }
             }
+        }
+    }
+    
+    struct AnimatingFontSize: AnimatableModifier {
+        var fontSize: CGFloat
+
+        var animatableData: CGFloat {
+            get { fontSize }
+            set { fontSize = newValue }
+        }
+
+        func body(content: Self.Content) -> some View {
+            content
+                .font(.system(size: self.fontSize))
         }
     }
 }

@@ -45,7 +45,7 @@ struct Settings_Page: View {
             HStack(spacing: 12) {
                 Text(NSLocalizedString("settings", comment: ""))
                     .foregroundColor(.primary)
-                    .font(.title.weight(.bold))
+                    .font(.title2.weight(.semibold))
 //                Spacer()
 //                HStack {
 //                    if bleManager.isConnectedToPinetime && deviceInfo.firmware != "" {

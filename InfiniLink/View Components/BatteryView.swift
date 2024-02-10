@@ -46,7 +46,7 @@ struct BatteryView: View {
                 }
                 Text(NSLocalizedString("battery_tilte", comment: "Battery"))
                     .foregroundColor(.primary)
-                    .font(.title.weight(.bold))
+                    .font(.title2.weight(.semibold))
                 Spacer()
             }
             .padding()

@@ -27,7 +27,7 @@ struct Connect: View {
             VStack {
                 HStack {
                     Text(NSLocalizedString("available_devices", comment: ""))
-                        .font(.title.bold())
+                        .font(.title2.weight(.semibold))
                         .frame(maxWidth: .infinity, alignment: .leading)
                     SheetCloseButton()
                         .frame(maxWidth: .infinity, alignment: .trailing)
@@ -102,7 +102,7 @@ struct Connect: View {
             Divider()
                 .padding(.bottom)
             Button(action: {
-                showHelpView.toggle()
+                //showHelpView.toggle()
             }) {
                 Text(NSLocalizedString("need_help_connecting", comment: "Need help connecting?"))
                     .padding(11)
@@ -110,9 +110,6 @@ struct Connect: View {
                     .foregroundColor(.white)
                     .background(Color.blue)
                     .clipShape(Capsule())
-            }
-            .sheet(isPresented: $showHelpView) {
-                ConnectionHelpView(isDisplayed: $showHelpView)
             }
             .padding(.bottom)
         }
@@ -129,6 +126,10 @@ struct Connect: View {
         .alert(isPresented: $showUnsupportedDeviceAlert) {
             Alert(title: Text(NSLocalizedString("oops", comment: "Oops!")), message: Text(NSLocalizedString("not_infinitime_device", comment: "It doesn't look like the device you selected is running InfiniTime.")), dismissButton: .cancel())
         }
+        // Will fix this later, but right now it makes the sheet view blur background break.
+//        .blurredSheet(.init(.regularMaterial), show:  $showHelpView) {} content: {
+//            ConnectionHelpView(isDisplayed: $showHelpView)
+//        }
     }
 }
 

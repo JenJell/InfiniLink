@@ -49,7 +49,7 @@ struct DFUWithBLE: View {
                 .opacity(lockNavigation ? 0.5 : 1.0)
                 Text(NSLocalizedString("software_update", comment: "Software Update"))
                     .foregroundColor(.primary)
-                    .font(.title.weight(.bold))
+                    .font(.title2.weight(.semibold))
                 Spacer()
                 HStack(spacing: 6) {
                     DFURefreshButton()

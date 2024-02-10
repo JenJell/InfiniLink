@@ -64,7 +64,7 @@ struct StepView: View {
                     }
                     Text(NSLocalizedString("steps", comment: "Steps"))
                         .foregroundColor(.primary)
-                        .font(.title.weight(.bold))
+                        .font(.title2.weight(.semibold))
                     Spacer()
                     Button {
                         SheetManager.shared.sheetSelection = .stepSettings

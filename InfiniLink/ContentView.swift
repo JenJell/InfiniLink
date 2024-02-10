@@ -41,21 +41,29 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             NavigationView {
-                switch selection {
-                case .home:
-                    WelcomeView()
-                        .alert(isPresented: $bleManager.setTimeError, content: {
-                            Alert(title: Text(NSLocalizedString("failed_set_time", comment: "")), message: Text(NSLocalizedString("failed_set_time_description", comment: "")), dismissButton: .default(Text(NSLocalizedString("dismiss_button", comment: ""))))})
-                        .alert(isPresented: $showDisconnectConfDialog) {
-                            Alert(title: Text(NSLocalizedString("disconnect_alert_title", comment: "")), primaryButton: .destructive(Text(NSLocalizedString("disconnect", comment: "Disconnect")), action: bleManager.disconnect), secondaryButton: .cancel())
-                        }
-                case .settings:
-                    Settings_Page()
-                }
+                WelcomeView()
+                    .alert(isPresented: $bleManager.setTimeError, content: {
+                        Alert(title: Text(NSLocalizedString("failed_set_time", comment: "")), message: Text(NSLocalizedString("failed_set_time_description", comment: "")), dismissButton: .default(Text(NSLocalizedString("dismiss_button", comment: ""))))})
+                    .alert(isPresented: $showDisconnectConfDialog) {
+                        Alert(title: Text(NSLocalizedString("disconnect_alert_title", comment: "")), primaryButton: .destructive(Text(NSLocalizedString("disconnect", comment: "Disconnect")), action: bleManager.disconnect), secondaryButton: .cancel())
+                    }
+                
+                
+//                switch selection {
+//                case .home:
+//                    WelcomeView()
+//                        .alert(isPresented: $bleManager.setTimeError, content: {
+//                            Alert(title: Text(NSLocalizedString("failed_set_time", comment: "")), message: Text(NSLocalizedString("failed_set_time_description", comment: "")), dismissButton: .default(Text(NSLocalizedString("dismiss_button", comment: ""))))})
+//                        .alert(isPresented: $showDisconnectConfDialog) {
+//                            Alert(title: Text(NSLocalizedString("disconnect_alert_title", comment: "")), primaryButton: .destructive(Text(NSLocalizedString("disconnect", comment: "Disconnect")), action: bleManager.disconnect), secondaryButton: .cancel())
+//                        }
+//                case .settings:
+//                    Settings_Page()
+//                }
             }
-            tabBar
+            //tabBar
         }
-        .sheet(isPresented: $sheetManager.showSheet, content: {
+        .blurredSheet(.init(.regularMaterial), show: $sheetManager.showSheet) {} content: {
             SheetManager.CurrentSheet()
                 .onDisappear {
                     if !sheetManager.upToDate {
@@ -64,7 +72,8 @@ struct ContentView: View {
                         }
                     }
                 }
-        })
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
         .onAppear {
             if !bleManager.isConnectedToPinetime {
                 if bleManager.isSwitchedOn {
@@ -101,6 +110,67 @@ struct ContentView: View {
             }
             .padding(12)
         }
+    }
+}
+
+struct CustomBackgroundView: UIViewRepresentable {
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        view.backgroundColor = .red
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(blurView, at: 0)
+        NSLayoutConstraint.activate([
+            blurView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            blurView.widthAnchor.constraint(equalTo: view.widthAnchor),
+        ])
+        return view
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) {}
+}
+
+struct PresentationBackgroundView: UIViewRepresentable {
+    
+    var presentationBackgroundColor = Color.clear
+
+    @MainActor
+    private static var backgroundColor: UIColor?
+    
+    func makeUIView(context: Context) -> UIView {
+        
+        class DummyView: UIView {
+            var presentationBackgroundColor = UIColor.clear
+            
+            override func didMoveToSuperview() {
+                super.didMoveToSuperview()
+                superview?.superview?.backgroundColor = presentationBackgroundColor
+            }
+        }
+        
+        let presentationBackgroundUIColor = UIColor(presentationBackgroundColor)
+        let dummyView = DummyView()
+        dummyView.presentationBackgroundColor = presentationBackgroundUIColor
+        
+        Task {
+            Self.backgroundColor = dummyView.superview?.superview?.backgroundColor
+            dummyView.superview?.superview?.backgroundColor = presentationBackgroundUIColor
+        }
+        
+        return dummyView
+    }
+    
+    static func dismantleUIView(_ uiView: UIView, coordinator: ()) {
+        uiView.superview?.superview?.backgroundColor = Self.backgroundColor
+    }
+    
+    func updateUIView(_ uiView: UIView, context: Context) { /* likely there is need to update */}
+}
+
+extension View {
+    func presentationBackground(_ color: Color = .clear) -> some View {
+        self.background(PresentationBackgroundView(presentationBackgroundColor: color))
     }
 }
 

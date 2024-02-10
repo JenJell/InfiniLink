@@ -14,7 +14,7 @@ struct Onboarding: View {
         VStack(spacing: 0) {
             HStack {
                 Text(NSLocalizedString("welcome_to_InfiniLink", comment: ""))
-                    .font(.title.bold())
+                    .font(.title2.weight(.semibold))
                 Spacer()
                 SheetCloseButton()
             }

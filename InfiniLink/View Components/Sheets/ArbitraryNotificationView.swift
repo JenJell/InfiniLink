@@ -21,7 +21,7 @@ struct ArbitraryNotificationSheet: View {
         VStack(spacing: 0) {
             HStack {
                 Text("Send Notification")
-                    .font(.title.bold())
+                    .font(.title2.weight(.semibold))
                 SheetCloseButton()
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }

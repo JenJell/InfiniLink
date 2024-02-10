@@ -15,7 +15,7 @@ struct ConnectionHelpView: View {
         VStack(spacing: 0) {
             HStack {
                 Text(NSLocalizedString("connection_help", comment: "Connection Help"))
-                    .font(.title.bold())
+                    .font(.title2.weight(.semibold))
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Spacer()

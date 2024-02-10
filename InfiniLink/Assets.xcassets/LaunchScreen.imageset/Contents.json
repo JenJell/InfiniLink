@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "LaunchScreenLight.png",
+      "filename" : "InfiniLink-LaunchScreen-light.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +12,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "LaunchScreen.png",
+      "filename" : "InfiniLink-LaunchScreen-dark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },

@@ -16,7 +16,7 @@ struct WhatsNew: View {
         VStack(spacing: 0) {
             HStack {
                 Text(NSLocalizedString("welcome_to_version", comment: "") + " \(appVersion!)")
-                    .font(.title.bold())
+                    .font(.title2.weight(.semibold))
                 Spacer()
                 SheetCloseButton()
             }

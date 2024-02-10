@@ -27,7 +27,7 @@ struct DownloadView: View {
             HStack(spacing: 6) {
                 Text(NSLocalizedString("downloads", comment: "Downloads"))
                     .foregroundColor(.primary)
-                    .font(.title.weight(.bold))
+                    .font(.title2.weight(.semibold))
                 Spacer()
                 DFURefreshButton()
                 Button {
