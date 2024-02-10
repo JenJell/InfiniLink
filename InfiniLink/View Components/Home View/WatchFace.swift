@@ -24,7 +24,7 @@ struct WatchFace: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: geometry.size.width / 1.85, height: geometry.size.width / 1.85, alignment: .center)
-                    .position(x: geometry.size.width / 2.0, y: geometry.size.width / 2.0 - 1.5)
+                    .position(x: geometry.size.width / 2.0, y: geometry.size.width / 2.0 - 1.0)
                     .brightness(colorScheme == .dark ? 0.015 : 0.125)
             }
         }
