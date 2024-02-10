@@ -342,7 +342,7 @@ struct CustomScrollView<Content: View>: View {
                     GeometryReader { geometry in
                         Rectangle()
                             .foregroundColor(.secondary)
-                            .frame(width: geometry.size.height / 4.0, height: geometry.size.height / 4.0, alignment: .center)
+                            .frame(width:  geometry.size.width / 2.65, height:  geometry.size.width / 2.65, alignment: .center)
                             .position(x: geometry.size.width / 2, y: (((self.scrollPosition - geometry.safeAreaInsets.top) * 0.045) - geometry.size.height * 0.25).clamped(to: geometry.size.height*0.25...geometry.size.height*1.0))
                             .blur(radius: 128)
                             .opacity(0.75)
@@ -350,11 +350,12 @@ struct CustomScrollView<Content: View>: View {
                             Image("WatchHomePage")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(width: geometry.size.height / 4.5, height: geometry.size.height / 4.5, alignment: .center)
-                                .position(x: geometry.size.width / 2, y: ((self.scrollPosition - geometry.safeAreaInsets.bottom) * 0.1) + (geometry.size.height - geometry.safeAreaInsets.bottom) * 0.2)
+                                .frame(width: geometry.size.width / 2.65, height: geometry.size.width / 2.65)
+                                .position(x: geometry.size.width / 2, y: ((self.scrollPosition - geometry.safeAreaInsets.bottom) * 0.1) + (geometry.size.height - geometry.safeAreaInsets.bottom) * 0.1925)
                             //(((self.scrollPosition - geometry.safeAreaInsets.top - ((geometry.size.height + geometry.safeAreaInsets.top) / 1.5)) * 0.045) + (geometry.size.height + geometry.safeAreaInsets.top) * 0.23).clamped(to: geometry.size.height*0.1...geometry.size.height*1.0))
+                                .brightness(colorScheme == .dark ? 0.0 : 0.065)
                                 .shadow(color: colorScheme == .dark ? Color.black : Color.secondary, radius: 16, x: 0, y: 0)
-                                .clipped()
+                                .clipped(antialiased: true)
                         }
                         .frame(width: geometry.size.width, height: (self.scrollPosition - geometry.safeAreaInsets.top).clamped(to: 0...geometry.size.height))
                     }

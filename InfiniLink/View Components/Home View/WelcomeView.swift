@@ -19,7 +19,12 @@ struct WelcomeView: View {
                     ZStack {
                         DeviceView()
                             .disabled(true)
-                            .blur(radius: 70)
+                            .blur(radius: 64)
+                        Rectangle()
+                            .ignoresSafeArea()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .foregroundColor(.background)
+                            .opacity(0.25)
                         VStack(spacing: 16) {
                             Text(NSLocalizedString("connecting", comment: "Connecting..."))
                                 .font(.title.weight(.bold))
@@ -36,25 +41,20 @@ struct WelcomeView: View {
                     }
                 } else {
                     ZStack {
-                        //VStack {
                         GeometryReader { geometry in
                             Image("WatchHomePagePineTime")
                                 .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: geometry.size.height * 1.1, height: geometry.size.height * 1.1, alignment: .center)
-                                .position(x: geometry.size.width / 2.1, y: geometry.size.height / 2.1)
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: geometry.size.height * 1.0, height: geometry.size.height * 1.0, alignment: .center)
+                                .position(x: geometry.size.width / 2.0, y: geometry.size.height / 2.1)
                                 .shadow(color: colorScheme == .dark ? Color.darkGray : Color.lightGray, radius: 128, x: 0, y: 0)
                                 .brightness(colorScheme == .dark ? -0.01 : 0.06)
-                            //.clipped()
                         }
                         VStack() {
                             VStack(spacing: 5) {
                                 Text("Welcome to InfiniLink")
                                     .font(.system(size: 24).weight(.medium))
                                     .foregroundColor(colorScheme == .dark ? Color.lightGray : Color.darkGray)
-                                    //.foregroundColor(.lightGray)
-                                //.padding(32)
-                                    //.padding(.top)
                                     .padding(.top)
                                     .padding(.top)
                                     .padding(.top, 20)
@@ -84,21 +84,11 @@ struct WelcomeView: View {
                                     .frame(maxWidth: .infinity, alignment: .center)
                                     .foregroundColor(.blue)
                                     .padding(.bottom, 5)
-                                //.padding(.bottom)
                                     .padding(.horizontal)
-                                //                            } else {
-                                //                                Text("Bluetooth is Disabled")
-                                //                                    .frame(maxWidth: .infinity, alignment: .center)
-                                //                                    .padding(.bottom)
-                                //                                    .padding(.bottom)
-                                //                                    .padding(.horizontal)
-                                //                            }
                             }
-                            //.padding(.vertical, 20)
                             .padding()
                         }
                     }
-                    //.fullBackground(imageName: "WatchHomePagePineTime")
                 }
                 
             } else {
@@ -153,18 +143,6 @@ struct NeumorphicButtonStyle: ButtonStyle {
             .background(Color.blue)
             .clipShape(Capsule())
             .foregroundColor(.primary)
-    }
-}
-
-public extension View {
-    func fullBackground(imageName: String) -> some View {
-       return background(
-                Image(imageName)
-                    .resizable()
-                    .scaledToFill()
-                    //.edgesIgnoringSafeArea(.all)
-       )
-       .frame(alignment: .center)
     }
 }
 
