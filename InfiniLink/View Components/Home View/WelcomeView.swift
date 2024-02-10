@@ -50,8 +50,8 @@ struct WelcomeView: View {
                         VStack() {
                             VStack(spacing: 5) {
                                 Text("Welcome to InfiniLink")
-                                    .font(.system(size: 28).weight(.medium))
-                                    .foregroundColor(colorScheme == .dark ? Color.gray : Color.gray)
+                                    .font(.system(size: 24).weight(.medium))
+                                    .foregroundColor(colorScheme == .dark ? Color.lightGray : Color.darkGray)
                                     //.foregroundColor(.lightGray)
                                 //.padding(32)
                                     //.padding(.top)

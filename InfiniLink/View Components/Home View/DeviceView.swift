@@ -351,7 +351,7 @@ struct CustomScrollView<Content: View>: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: geometry.size.height / 4.5, height: geometry.size.height / 4.5, alignment: .center)
-                                .position(x: geometry.size.width / 2, y: ((self.scrollPosition - geometry.safeAreaInsets.top) * 0.1) + (geometry.size.height - geometry.safeAreaInsets.top) * 0.2)
+                                .position(x: geometry.size.width / 2, y: ((self.scrollPosition - geometry.safeAreaInsets.bottom) * 0.1) + (geometry.size.height - geometry.safeAreaInsets.bottom) * 0.2)
                             //(((self.scrollPosition - geometry.safeAreaInsets.top - ((geometry.size.height + geometry.safeAreaInsets.top) / 1.5)) * 0.045) + (geometry.size.height + geometry.safeAreaInsets.top) * 0.23).clamped(to: geometry.size.height*0.1...geometry.size.height*1.0))
                                 .shadow(color: colorScheme == .dark ? Color.black : Color.secondary, radius: 16, x: 0, y: 0)
                                 .clipped()
@@ -379,7 +379,7 @@ struct CustomScrollView<Content: View>: View {
                                         Text(deviceInfo.deviceName == "" ? "InfiniTime" : deviceInfo.deviceName)
                                             .bold()
                                         //.font(.title2.weight(.semibold))
-                                            .modifier(AnimatingFontSize(fontSize: showDivider ? 24 : 30))
+                                            .modifier(AnimatingFontSize(fontSize: showDivider ? 24 : 24))
                                             .animation(Animation.easeInOut(duration: 0.1), value: showDivider)
                                             .foregroundColor(colorScheme == .dark ? .white : .black)
                                     } else {
@@ -387,7 +387,7 @@ struct CustomScrollView<Content: View>: View {
                                             .bold()
                                         //.font(.title.weight(.semibold))
                                         
-                                            .modifier(AnimatingFontSize(fontSize: showDivider ? 24 : 30))
+                                            .modifier(AnimatingFontSize(fontSize: showDivider ? 24 : 24))
                                             .animation(Animation.easeInOut(duration: 0.1), value: showDivider)
                                             .foregroundColor(colorScheme == .dark ? .white : .black)
                                     }
@@ -401,7 +401,7 @@ struct CustomScrollView<Content: View>: View {
                             Divider()
                         }
                         ScrollView(showsIndicators: false) {
-                            Spacer(minLength: (geometry.size.height * 0.28))
+                            Spacer(minLength: (geometry.size.height * 0.28) + geometry.safeAreaInsets.bottom / 1.5)
                             VStack() {
                                 GeometryReader{ geo in
                                     AnyView(Color.clear
