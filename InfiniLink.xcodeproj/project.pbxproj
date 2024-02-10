@@ -79,6 +79,7 @@
 		E515FB1B284C58AA0040B582 /* BLEManagerVariables.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515FB1A284C58AA0040B582 /* BLEManagerVariables.swift */; };
 		E5286050282C5ED300C06FA0 /* ChartViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = E528604F282C5ED300C06FA0 /* ChartViewComponents.swift */; };
 		E53F51352B718E4A008D4CE6 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = E53F51342B718E4A008D4CE6 /* Zip */; };
+		E54ED9E12B77B94600D7E405 /* WatchFace.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54ED9E02B77B94600D7E405 /* WatchFace.swift */; };
 		E57654032B5781970059C8EF /* WeatherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57654022B5781970059C8EF /* WeatherController.swift */; };
 		E57AD5772823F85D00E33EEA /* DeviceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AD5762823F85D00E33EEA /* DeviceData.swift */; };
 		E57E326F2B6682CE00173AF1 /* FileSystemDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57E326E2B6682CE00173AF1 /* FileSystemDebug.swift */; };
@@ -188,6 +189,7 @@
 		E515FB16284C56480040B582 /* WelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		E515FB1A284C58AA0040B582 /* BLEManagerVariables.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BLEManagerVariables.swift; sourceTree = "<group>"; };
 		E528604F282C5ED300C06FA0 /* ChartViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewComponents.swift; sourceTree = "<group>"; };
+		E54ED9E02B77B94600D7E405 /* WatchFace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchFace.swift; sourceTree = "<group>"; };
 		E57654022B5781970059C8EF /* WeatherController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeatherController.swift; path = InfiniLink/Weather/WeatherController.swift; sourceTree = SOURCE_ROOT; };
 		E57AD5762823F85D00E33EEA /* DeviceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeviceData.swift; path = ../DeviceData.swift; sourceTree = "<group>"; };
 		E57AD57D282462D900E33EEA /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				E515FB14284C56070040B582 /* DeviceView.swift */,
 				E5EEB1D32803438200FB0C11 /* RenameView.swift */,
 				E57E326E2B6682CE00173AF1 /* FileSystemDebug.swift */,
+				E54ED9E02B77B94600D7E405 /* WatchFace.swift */,
 			);
 			path = "Home View";
 			sourceTree = "<group>";
@@ -727,6 +730,7 @@
 				E5EEB1DA28034EA500FB0C11 /* BatteryView.swift in Sources */,
 				267C2EFD273DDB5500F464B0 /* StepSettingsGoalChange.swift in Sources */,
 				26D7816526C9EB3800BBF555 /* BLEDelegates.swift in Sources */,
+				E54ED9E12B77B94600D7E405 /* WatchFace.swift in Sources */,
 				267C2EF8273C8AB300F464B0 /* StepWeeklyGraph.swift in Sources */,
 				26C5FAD526FBB76100921207 /* DeviceNameManager.swift in Sources */,
 				26A6315B26C49841005AE404 /* DFU.swift in Sources */,

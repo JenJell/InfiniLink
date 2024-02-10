@@ -34,7 +34,7 @@ struct Connect: View {
                 }
                 HStack {
                     Text("\(bleManager.newPeripherals.count) \(NSLocalizedString("devices", comment: "Devices"))")
-                        .padding()
+                        .padding(12)
                         .font(.body.weight(.semibold))
                         .foregroundColor(.primary)
                         .background(Color.gray.opacity(0.15))
@@ -105,7 +105,7 @@ struct Connect: View {
                 //showHelpView.toggle()
             }) {
                 Text(NSLocalizedString("need_help_connecting", comment: "Need help connecting?"))
-                    .padding(11)
+                    .padding(12)
                     .padding(.horizontal, 6)
                     .foregroundColor(.white)
                     .background(Color.blue)

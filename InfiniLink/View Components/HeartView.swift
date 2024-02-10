@@ -42,7 +42,7 @@ struct HeartView: View {
                 }
                 Text(NSLocalizedString("heart_rate", comment: "Heart Rate"))
                     .foregroundColor(.primary)
-                    .font(.title.weight(.bold))
+                    .font(.title2.weight(.semibold))
                 Spacer()
                 Button {
                     chartManager.currentChart = .heart
@@ -51,7 +51,7 @@ struct HeartView: View {
                 } label: {
                     Image(systemName: "gear")
                         .imageScale(.medium)
-                        .padding(14)
+                        .padding(12)
                         .font(.body.weight(.semibold))
                         .foregroundColor(colorScheme == .dark ? .white : .darkGray)
                         .background(Color.gray.opacity(0.15))
@@ -111,6 +111,7 @@ struct HeartView: View {
             }
         }
         .navigationBarBackButtonHidden()
+        .navigationBarHidden(true)
         .onAppear {
             chartManager.currentChart = .heart
             lastStatusViewWasHeart = true

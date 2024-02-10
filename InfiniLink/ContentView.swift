@@ -39,7 +39,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
+        GeometryReader { geometry in
             NavigationView {
                 WelcomeView()
                     .alert(isPresented: $bleManager.setTimeError, content: {
@@ -47,49 +47,35 @@ struct ContentView: View {
                     .alert(isPresented: $showDisconnectConfDialog) {
                         Alert(title: Text(NSLocalizedString("disconnect_alert_title", comment: "")), primaryButton: .destructive(Text(NSLocalizedString("disconnect", comment: "Disconnect")), action: bleManager.disconnect), secondaryButton: .cancel())
                     }
-                
-                
-//                switch selection {
-//                case .home:
-//                    WelcomeView()
-//                        .alert(isPresented: $bleManager.setTimeError, content: {
-//                            Alert(title: Text(NSLocalizedString("failed_set_time", comment: "")), message: Text(NSLocalizedString("failed_set_time_description", comment: "")), dismissButton: .default(Text(NSLocalizedString("dismiss_button", comment: ""))))})
-//                        .alert(isPresented: $showDisconnectConfDialog) {
-//                            Alert(title: Text(NSLocalizedString("disconnect_alert_title", comment: "")), primaryButton: .destructive(Text(NSLocalizedString("disconnect", comment: "Disconnect")), action: bleManager.disconnect), secondaryButton: .cancel())
-//                        }
-//                case .settings:
-//                    Settings_Page()
-//                }
             }
-            //tabBar
-        }
-        .blurredSheet(.init(.regularMaterial), show: $sheetManager.showSheet) {} content: {
-            SheetManager.CurrentSheet()
-                .onDisappear {
-                    if !sheetManager.upToDate {
-                        if onboarding == nil {
-                            onboarding = false
+            .blurredSheet(.init(.regularMaterial), show: $sheetManager.showSheet) {} content: {
+                SheetManager.CurrentSheet()
+                    .onDisappear {
+                        if !sheetManager.upToDate {
+                            if onboarding == nil {
+                                onboarding = false
+                            }
                         }
                     }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-        .onAppear {
-            if !bleManager.isConnectedToPinetime {
-                if bleManager.isSwitchedOn {
-                    self.bleManager.startScanning()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .onAppear {
+                if !bleManager.isConnectedToPinetime {
+                    if bleManager.isSwitchedOn {
+                        self.bleManager.startScanning()
+                    }
                 }
             }
-        }
-        .preferredColorScheme((deviceDataForTopLevel.chosenTheme == "System") ? nil : appThemes[deviceDataForTopLevel.chosenTheme])
-        .onChange(of: bleManager.batteryLevel) { bat in
-            batteryNotifications.notify(bat: Int(bat), bleManager: bleManager)
-        }
-        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification), perform: { output in
-            if bleManager.isConnectedToPinetime {
-                ChartManager.shared.addItem(dataPoint: DataPoint(date: Date(), value: 0, chart: ChartsAsInts.connected.rawValue))
+            .preferredColorScheme((deviceDataForTopLevel.chosenTheme == "System") ? nil : appThemes[deviceDataForTopLevel.chosenTheme])
+            .onChange(of: bleManager.batteryLevel) { bat in
+                batteryNotifications.notify(bat: Int(bat), bleManager: bleManager)
             }
-        })
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willTerminateNotification), perform: { output in
+                if bleManager.isConnectedToPinetime {
+                    ChartManager.shared.addItem(dataPoint: DataPoint(date: Date(), value: 0, chart: ChartsAsInts.connected.rawValue))
+                }
+            })
+        }
     }
     
     var tabBar: some View {

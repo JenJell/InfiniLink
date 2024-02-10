@@ -31,7 +31,7 @@ struct RenameView: View {
                 }
                 Text(NSLocalizedString("rename", comment: ""))
                     .foregroundColor(.primary)
-                    .font(.title.weight(.bold))
+                    .font(.title2.weight(.semibold))
                 Spacer()
                 Button {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
@@ -40,7 +40,7 @@ struct RenameView: View {
                     presentationMode.wrappedValue.dismiss()
                 } label: {
                     Text(NSLocalizedString("rename", comment: ""))
-                        .padding(14)
+                        .padding(12)
                         .font(.body.weight(.semibold))
                         .foregroundColor(Color.white)
                         .background(Color.blue)
@@ -63,6 +63,7 @@ struct RenameView: View {
             .padding()
         }
         .navigationBarBackButtonHidden()
+        .navigationBarHidden(true)
     }
 }
 

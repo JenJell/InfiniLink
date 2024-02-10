@@ -96,6 +96,7 @@ struct FileSystemDebug: View {
             }
         }
         .navigationBarBackButtonHidden()
+        .navigationBarHidden(true)
         //.onAppear {
         //    isTextFieldFocused = true
         //}

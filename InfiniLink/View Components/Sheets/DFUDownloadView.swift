@@ -35,7 +35,7 @@ struct DownloadView: View {
                 } label: {
                     Image(systemName: "xmark")
                         .imageScale(.medium)
-                        .padding(14)
+                        .padding(12)
                         .font(.body.weight(.semibold))
                         .foregroundColor(colorScheme == .dark ? .white : .darkGray)
                         .background(Color.gray.opacity(0.15))

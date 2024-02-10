@@ -89,6 +89,7 @@ struct BatteryView: View {
             lastStatusViewWasHeart = false
         }
         .navigationBarBackButtonHidden()
+        .navigationBarHidden(true)
     }
 }
 

@@ -347,13 +347,12 @@ struct CustomScrollView<Content: View>: View {
                             .blur(radius: 128)
                             .opacity(0.75)
                         VStack {
-                            Image("WatchHomePage")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: geometry.size.width / 2.65, height: geometry.size.width / 2.65)
+                            WatchFace()
+                                //.resizable()
+                                //.aspectRatio(contentMode: .fill)
+                                .frame(width: geometry.size.width / 2.4, height: geometry.size.width / 2.4)
                                 .position(x: geometry.size.width / 2, y: ((self.scrollPosition - geometry.safeAreaInsets.bottom) * 0.1) + (geometry.size.height - geometry.safeAreaInsets.bottom) * 0.1925)
                             //(((self.scrollPosition - geometry.safeAreaInsets.top - ((geometry.size.height + geometry.safeAreaInsets.top) / 1.5)) * 0.045) + (geometry.size.height + geometry.safeAreaInsets.top) * 0.23).clamped(to: geometry.size.height*0.1...geometry.size.height*1.0))
-                                .brightness(colorScheme == .dark ? 0.0 : 0.065)
                                 .shadow(color: colorScheme == .dark ? Color.black : Color.secondary, radius: 16, x: 0, y: 0)
                                 .clipped(antialiased: true)
                         }

@@ -256,5 +256,6 @@ struct Settings_Page: View {
                 .padding()
             }
         }
+        .navigationBarHidden(true)
     }
 }

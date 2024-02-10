@@ -72,7 +72,7 @@ struct StepView: View {
                     } label: {
                         Image(systemName: "gear")
                             .imageScale(.medium)
-                            .padding(14)
+                            .padding(12)
                             .font(.body.weight(.semibold))
                             .foregroundColor(colorScheme == .dark ? .white : .darkGray)
                             .background(Color.gray.opacity(0.15))
@@ -122,6 +122,7 @@ struct StepView: View {
                 }
             }
             .navigationBarBackButtonHidden()
+            .navigationBarHidden(true)
         }
     }
 }

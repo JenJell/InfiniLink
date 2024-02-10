@@ -183,7 +183,7 @@ class WeatherController: NSObject, ObservableObject, CLLocationManagerDelegate {
                 
                 print(debugDescription)
                 if debugMode {
-                    bleWriteManager.sendNotification(title: "NWS API Debug", body: debugDescription)
+                    bleWriteManager.sendNotification(title: "WAPI Debug", body: debugDescription)
                 }
                 
                 switch json["forecast"]["forecastday"][0]["day"]["condition"]["text"] {
@@ -286,8 +286,9 @@ class WeatherController: NSObject, ObservableObject, CLLocationManagerDelegate {
                     temperatureC = json["features"][idx]["properties"]["temperature"]["value"].doubleValue
                     
                     let debugDescription = "NWS API short description: \(json["features"][idx]["properties"]["textDescription"])"
-                    print(debugDescription)
-                    bleWriteManager.sendNotification(title: "NWS API Debug", body: debugDescription)
+                    if debugMode {
+                        bleWriteManager.sendNotification(title: "NWS API Debug", body: debugDescription)
+                    }
                     
                     switch json["features"][idx]["properties"]["textDescription"] {
                         // The textDescription docs are out of date so these cases might be slightly different than the fetched data and may need to be updated

@@ -126,6 +126,7 @@ struct WelcomeView: View {
                 bleManager.stopScanning()
             }
         }
+        .navigationBarHidden(true)
         
     }
     

@@ -59,7 +59,7 @@ struct DFUWithBLE: View {
                         Image(systemName: "doc")
                             .imageScale(.medium)
                             .font(.body.weight(.semibold))
-                            .padding(14)
+                            .padding(12)
                             .foregroundColor(colorScheme == .dark ? .white : .darkGray)
                             .background(Color.gray.opacity(0.15))
                             .clipShape(Circle())
@@ -129,6 +129,7 @@ struct DFUWithBLE: View {
             Alert(title: Text(NSLocalizedString("success", comment: "Success!")), message: Text(NSLocalizedString("The transfer was successfully completed.", comment: "The transfer was successfully completed.")))
         }
         .navigationBarBackButtonHidden()
+        .navigationBarHidden(true)
     }
 }
 
@@ -333,7 +334,7 @@ struct DFURefreshButton: View {
                         .foregroundColor(colorScheme == .dark ? .white : .darkGray)
                 }
             }
-            .padding(14)
+            .padding(12)
             .font(.body.weight(.semibold))
             .background(Color.gray.opacity(0.15))
             .clipShape(Circle())
