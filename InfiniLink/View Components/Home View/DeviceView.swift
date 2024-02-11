@@ -361,11 +361,11 @@ struct CustomScrollView<Content: View>: View {
                         VStack {
                             WatchFace()
                                 //.resizable()
+                                //.scaleEffect(geometry.size.width * 0.001, anchor: .center)
                                 //.aspectRatio(contentMode: .fill)
-                                .frame(width: geometry.size.width / 2.4, height: geometry.size.width / 2.4)
+                                .frame(width: geometry.size.width / 2.4, height: geometry.size.width / 2.4, alignment: .center)
                                 .position(x: geometry.size.width / 2, y: ((self.scrollPosition - geometry.safeAreaInsets.bottom) * 0.1) + (geometry.size.height - geometry.safeAreaInsets.bottom) * 0.1925)
                             //(((self.scrollPosition - geometry.safeAreaInsets.top - ((geometry.size.height + geometry.safeAreaInsets.top) / 1.5)) * 0.045) + (geometry.size.height + geometry.safeAreaInsets.top) * 0.23).clamped(to: geometry.size.height*0.1...geometry.size.height*1.0))
-                                .shadow(color: colorScheme == .dark ? Color.black : Color.secondary, radius: 16, x: 0, y: 0)
                                 .clipped(antialiased: true)
                         }
                         .frame(width: geometry.size.width, height: (self.scrollPosition - geometry.safeAreaInsets.top).clamped(to: 0...geometry.size.height))
